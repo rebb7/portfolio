@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shane Li - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #191923;
+            --bg-panel: #20202A;
+            --text-main: #FFFFFF;
+            --text-muted: #8c8c8e;
+            --accent-green: #00C48D;
+            --scrollbar-bg: #2b2b36;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 290px 1fr 80px;
+            width: 100%;
+            max-width: 1600px;
+            height: 100vh;
+            background-color: var(--bg-body);
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            background-color: var(--bg-panel);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 30px;
+            overflow-y: auto;
+            border-right: 1px solid #2b2b30;
+        }
+
+        .profile-header {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .profile-role {
+            font-size: 13px;
+            color: var(--accent-green);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        /* --- Main Content --- */
+        .main-content { padding: 30px; overflow-y: auto; position: relative; }
+
+        .banner {
+            background-image: linear-gradient(rgba(30, 30, 40, 0.93), rgba(30, 30, 40, 0.93)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5980?auto=format&fit=crop&w=1000&q=80');
+            background-size: cover; background-position: center;
+            padding: 40px; border-radius: 4px; margin-bottom: 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        /* h1 margin adjusted */
+        .banner-text h1 { font-size: 36px; font-weight: 800; margin: 0; } 
+        
+        .explore-btn {
+            background-color: var(--accent-green); color: #20202A; border: none;
+            padding: 10px 25px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-top: 20px; cursor: pointer; font-size: 12px; border-radius: 2px;
+        }
+
+        /* --- Company Section Styling --- */
+        .company-section {
+            margin-bottom: 60px;
+            border-left: 2px solid #2b2b30;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .company-section::before {
+            content: ''; position: absolute; left: -6px; top: 0;
+            width: 10px; height: 10px; border-radius: 50%;
+            background-color: var(--accent-green);
+        }
+
+        .company-header { margin-bottom: 25px; }
+        .company-name { font-size: 24px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 15px; }
+        
+        .role-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px;}
+        .role-badge {
+            font-size: 12px; padding: 4px 10px; border-radius: 4px;
+            background-color: #2b2b36; color: var(--text-muted);
+            border: 1px solid #333; font-family: 'Courier Prime', monospace;
+        }
+        .role-badge.current { border-color: var(--accent-green); color: var(--accent-green); }
+
+        /* Projects Grid */
+        .projects-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .project-card {
+            background-color: var(--bg-panel); padding: 30px;
+            border-radius: 4px; border: 1px solid #2b2b30;
+            position: relative;
+        }
+        .project-card:hover { border-color: #444; }
+        
+        .project-title { font-size: 18px; font-weight: 600; color: var(--text-main); margin-bottom: 5px; }
+        .project-role { font-size: 13px; color: var(--accent-green); font-family: 'Courier Prime', monospace; margin-bottom: 15px;}
+        .project-content { color: var(--text-muted); font-size: 14px; line-height: 1.8; }
+        .project-content ul { list-style: none; padding-left: 0; }
+        .project-content li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+        .project-content li::before { content: '>'; color: var(--accent-green); position: absolute; left: 0; font-weight: bold; }
+        
+        /* Comparison Grid Styling */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .img-wrapper {
+            background-color: #1a1a20; 
+            padding: 15px; 
+            border-radius: 4px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .img-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        
+        .img-sub-label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #777;
+            line-height: 1.4;
+        }
+
+        .img-wrapper img { max-width: 100%; height: auto; border-radius: 2px; opacity: 0.9; cursor: pointer; transition: opacity 0.3s; }
+        .img-wrapper img:hover { opacity: 1; }
+
+        /* General Img Container */
+        .img-container {
+            background-color: #1a1a20; padding: 15px; border-radius: 4px;
+            margin-top: 15px; text-align: center;
+        }
+        .img-container img { max-width: 100%; height: auto; border-radius: 2px; opacity: 0.9; }
+
+        /* Right Bar */
+        .right-bar {
+            background-color: var(--bg-panel); display: flex; flex-direction: column;
+            align-items: center; padding-top: 30px; border-left: 1px solid #2b2b30;
+        }
+        
+        .menu-btn { 
+            background-color: transparent; 
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center; 
+        }
+        
+        .nav-text { writing-mode: vertical-rl; text-orientation: mixed; color: var(--text-muted); font-size: 12px; font-weight: 600; letter-spacing: 2px; margin-top: auto; margin-bottom: auto; text-transform: uppercase; }
+
+        /* RWD */
+        @media (max-width: 900px) {
+            .app-container { grid-template-columns: 1fr; height: auto; overflow: auto; }
+            .sidebar, .right-bar { display: none; }
+            body { overflow: auto; }
+            .company-section { padding-left: 15px; border-left: 1px solid #2b2b30; }
+            .comparison-grid { grid-template-columns: 1fr; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <aside class="sidebar">
+            <div class="profile-header">
+                <div class="profile-name">Shane Li</div>
+                <div class="profile-role">Software Engineer</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="banner">
+                <div class="banner-text">
+                    <h1>Work Experience</h1>
+                </div>
+            </header>
+
+            <div class="company-section">
+                <div class="company-header">
+                    <div class="company-name">
+                        Midland Holdings Limited
+                    </div>
+                    <div class="role-tags">
+                        <span class="role-badge current">Fulltime Backend Software Engineer</span>
+                        <span class="role-badge">2025 May - Present</span>
+                    </div>
+                </div>
+
+                <div class="projects-grid">
+                    
+                    <article class="project-card">
+                        <div class="project-title">AI Search Frontend to Backend API Flow</div>
+                        <div class="project-role">System Architecture</div>
+                        <div class="project-content">
+                            <p style="margin-bottom: 15px; border-left: 3px solid var(--accent-green); padding-left: 10px; color: #ddd; font-style: italic;">
+                                <strong>Architecture Evolution:</strong> The old version was based on the original API to add up AI search function, while the finalized version created a new API.
+                            </p>
+                            <ul>
+                                <li>Listing all conditions and fallback scenario cases</li>
+                                <li>Design new API & base on existing API restructure</li>
+                                <li>Provided full clear picture for whole team to develop new feature</li>
+                            </ul>
+                            
+                            <div class="comparison-grid">
+                                <div class="img-wrapper">
+                                    <span class="img-label">Finalized Version</span>
+                                    <span class="img-sub-label">(New API Design)</span>
+                                    <img src="image_18a35b.png" alt="AI Search API Finalized">
+                                </div>
+                                <div class="img-wrapper">
+                                    <span class="img-label">Original Version</span>
+                                    <span class="img-sub-label">(Based on Original API)</span>
+                                    <img src="original_design.png" alt="AI Search API Original">
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">Sync Data System in VM</div>
+                        <div class="project-role">AWS MSK Integration</div>
+                        <div class="project-content">
+                            <ul>
+                                <li>Create MSK policy in AWS</li>
+                                <li>Set up connector & config</li>
+                                <li>Project included:
+                                    <ul style="color:#aaa; font-size:13px; margin-top:5px;">
+                                        <li>1) Sync from Mongo to Big query through AWS Kadka Connector & MSK.</li>
+                                        <li>2) Sync from Mongo to Oracle through AWS Kadka Connector & MSK.</li>
+                                        <li>3) Sync from SQL to Mongo through AWS Kadka Connector & MSK.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="img-container">
+                                <img src="image_18a356.png" alt="Data Sync Flow">
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">AI Project API Gateway & Security</div>
+                        <div class="project-role">Backend Architecture & Security Design</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>API Gateway Structure:</strong> Designed the complete API gateway infrastructure specifically for the AI project.</li>
+                                <li><strong>Secure Data Transfer:</strong> Implemented decrypting & encrypting methods for secure data transmission through the API.</li>
+                                <li><strong>Redis Rate Limiting:</strong> Implemented Redis-based rate limiting to control AI search function usage for different user tiers (member vs. non-member).</li>
+                                <li><strong>Database Design:</strong> Designed new MongoDB collection data structures optimized for AI data requirements.</li>
+                                <li><strong>API Governance:</strong> Established the whole structure & rules for App & Web teams to consume the API.</li>
+                                <li><strong>Access Control:</strong> Implemented pass key time limit handling and multiple device checking.</li>
+                            </ul>
+                            <div class="img-container">
+                                <img src="image4.png" alt="AI Project API Gateway Structure">
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">AI Search Workflow with Dify & RAG</div>
+                        <div class="project-role">LLM & Vector Search Implementation</div>
+                        <div class="project-content">
+                            <p style="margin-bottom: 20px; color: #ddd; line-height: 1.6;">
+                                Implemented a cutting-edge <strong>Retrieval-Augmented Generation (RAG)</strong> system. The architecture evolved from a standard workflow to a sophisticated Dify & Node.js orchestration for higher accuracy.
+                            </p>
+                            <ul>
+                                <li><strong>Dify & Node.js Integration:</strong> Developed core logic connecting Node.js backend with Dify AI orchestration.</li>
+                                <li><strong>RAG Implementation:</strong> Used text-embedding vector search to precisely "grape" (retrieve) data, significantly improving answer quality over the older version.</li>
+                                <li><strong>LLM Utilization:</strong> Integrated Large Language Models for natural language processing.</li>
+                            </ul>
+                            <div class="comparison-grid">
+                                <div class="img-wrapper" style="border: 1px solid var(--accent-green);">
+                                    <span class="img-label">Latest Version (Accurate)</span>
+                                    <span class="img-sub-label">Dify & RAG Workflow<br>(Current Standard)</span>
+                                    <img src="image3.png" alt="Dify Nodejs RAG Flow">
+                                </div>
+                                <div class="img-wrapper" style="opacity: 0.7;">
+                                    <span class="img-label" style="color: #777;">Older Version</span>
+                                    <span class="img-sub-label">Initial Workflow<br>(Less Accurate)</span>
+                                    <img src="image2.png" alt="Older Dify Workflow">
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">Internal AI Policy & Contact Chatbot</div>
+                        <div class="project-role">AI Application Development (Dify & Node.js)</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>Internal Knowledge Base:</strong> Developed an intelligent chatbot for company staff to query company rules, policies, and guidelines instantly.</li>
+                                <li><strong>Smart Contact Lookup:</strong> Integrated staff directory allowing users to find colleague contact details via natural language asking.</li>
+                                <li><strong>Document Ingestion Engine:</strong> Built a flow to automatically import and extract text from PDFs and Excel files to update the knowledge base.</li>
+                                <li><strong>Intent Recognition Flow:</strong> Utilized Dify workflows to identify user intent (e.g., policy question vs. contact search) and route to the correct data source.</li>
+                            </ul>
+                            
+                            <div class="comparison-grid" style="grid-template-columns: repeat(3, 1fr);">
+                                <div class="img-wrapper"><span class="img-label">Chat Interface</span><img src="chatbot1.png" alt="Chatbot UI"></div>
+                                <div class="img-wrapper"><span class="img-label">Dify Workflow</span><img src="chatbot2.png" alt="Dify Flow"></div>
+                                <div class="img-wrapper"><span class="img-label">Data Extraction</span><img src="chatbot3.png" alt="Document Parsing"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <div class="company-section">
+                <div class="company-header">
+                    <div class="company-name">Bluepin (HK) Limited</div>
+                    <div class="role-tags">
+                        <span class="role-badge">Full-time: Feb 2024 - Jan 2025</span>
+                        <span class="role-badge">Part-time: May 2023 - Jan 2024</span>
+                        <span class="role-badge" style="border-color: transparent; padding-left:0;">Role: Software Developer</span>
+                    </div>
+                </div>
+
+                <div class="projects-grid">
+                    <article class="project-card">
+                        <div class="project-title">Hong Kong Hotel Trip Planner Web-App</div>
+                        <div class="project-role">Web App Development & Map API Integration</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>Trip Scheduling:</strong> Developed a dedicated web application for hotel guests to plan customized trip schedules in Hong Kong.</li>
+                                <li><strong>Route Optimization:</strong> Integrated Map APIs to calculate the fastest route, allowing users to visit all selected spots efficiently in one day.</li>
+                                <li><strong>User Experience:</strong> Designed a seamless interface for users to visualize and manage their itinerary.</li>
+                            </ul>
+                            <div class="comparison-grid">
+                                <div class="img-wrapper"><span class="img-label">Interface View 1</span><img src="ds1.png" alt="Trip Planner Interface 1"></div>
+                                <div class="img-wrapper"><span class="img-label">Interface View 2</span><img src="ds2.png" alt="Trip Planner Interface 2"></div>
+                                <div class="img-wrapper"><span class="img-label">Interface View 3</span><img src="ds3.png" alt="Trip Planner Interface 3"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">Internal Admin Dashboard & Hotel Data Monitor</div>
+                        <div class="project-role">Full Stack Development (Firebase/Mongo)</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>Admin Page UI:</strong> Created a clear UI layout for internal staff to monitor hotel data stored in MongoDB.</li>
+                                <li><strong>Role-Based Access:</strong> Implemented distinct permissions for Hotel Staff vs. Internal Company Staff. Users managed via Firebase.</li>
+                                <li><strong>Alert System:</strong> Integrated automated alert system via <strong>WhatsApp, Email, and Line</strong> for internal debugging and critical issue notifications.</li>
+                                <li><strong>Hotel Staff Features:</strong> Easy filtering and checking of hotel check-in/out information.</li>
+                                <li><strong>Internal Staff Features:</strong> Interface to modify or add new translations for robot UI chat content easily.</li>
+                            </ul>
+                            <div class="comparison-grid" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="img-wrapper"><span class="img-label">View 1</span><img src="admin1.png" alt="Admin View 1"></div>
+                                <div class="img-wrapper"><span class="img-label">View 2</span><img src="admin2.png" alt="Admin View 2"></div>
+                                <div class="img-wrapper"><span class="img-label">View 3</span><img src="admin3.png" alt="Admin View 3"></div>
+                                <div class="img-wrapper"><span class="img-label">View 4</span><img src="admin4.png" alt="Admin View 4"></div>
+                                <div class="img-wrapper"><span class="img-label">View 5</span><img src="admin5.png" alt="Admin View 5"></div>
+                                <div class="img-wrapper"><span class="img-label">View 6</span><img src="admin6.png" alt="Admin View 6"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">WhatsApp Check-in Robot</div>
+                        <div class="project-role">Bot Development, Twilio & OCR Integration</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>Twilio & Node.js Implementation:</strong> Developed a WhatsApp-based robot utilizing Twilio API and Node.js backend to streamline the hotel check-in process.</li>
+                                <li><strong>OCR Identity Verification:</strong> Integrated Optical Character Recognition (OCR) technology to automatically extract and verify text from identity cards.</li>
+                                <li><strong>Seamless Experience:</strong> Enabled a contactless and efficient check-in flow directly through the user's preferred messaging platform.</li>
+                            </ul>
+                            <div class="comparison-grid" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="img-wrapper"><span class="img-label">View 1</span><img src="wts1.png" alt="WhatsApp Robot View 1"></div>
+                                <div class="img-wrapper"><span class="img-label">View 2</span><img src="wts2.png" alt="WhatsApp Robot View 2"></div>
+                                <div class="img-wrapper"><span class="img-label">View 3</span><img src="wts3.png" alt="WhatsApp Robot View 3"></div>
+                                <div class="img-wrapper"><span class="img-label">View 4</span><img src="wts4.png" alt="WhatsApp Robot View 4"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">Company Webpage Build & Update</div>
+                        <div class="project-role">Web Development & Maintenance</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>Website Development:</strong> Built and maintained the company's official website, ensuring a professional online presence.</li>
+                                <li><strong>Content Updates:</strong> Managed regular updates to website content and features to reflect the latest company services and news.</li>
+                            </ul>
+                            <div class="comparison-grid" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="img-wrapper"><span class="img-label">Webpage View 1</span><img src="bp1.png" alt="Company Webpage 1"></div>
+                                <div class="img-wrapper"><span class="img-label">Webpage View 2</span><img src="bp2.png" alt="Company Webpage 2"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">Dynamic Hotel UI Architecture (React)</div>
+                        <div class="project-role">Frontend Architecture & Dynamic Component Design</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>Single Codebase Strategy:</strong> Developed a unified, dynamic React project capable of rendering distinct, customized UIs for different hotel clients without code duplication.</li>
+                                <li><strong>Scalable Customization:</strong> Architected the system to allow deep visual customization (colors, layout, branding) via configuration, streamlining the onboarding of new hotels.</li>
+                                <li><strong>Efficiency:</strong> Significantly reduced maintenance time by managing multiple hotel interfaces from one central repository.</li>
+                            </ul>
+                            <div class="comparison-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                                <div class="img-wrapper"><span class="img-label">Hotel 1</span><img src="hotel1.png" alt="Hotel UI 1"></div>
+                                <div class="img-wrapper"><span class="img-label">Hotel 2</span><img src="hotel2.png" alt="Hotel UI 2"></div>
+                                <div class="img-wrapper"><span class="img-label">Hotel 3</span><img src="hotel3.png" alt="Hotel UI 3"></div>
+                                <div class="img-wrapper"><span class="img-label">Hotel 4</span><img src="hotel4.png" alt="Hotel UI 4"></div>
+                                <div class="img-wrapper"><span class="img-label">Hotel 5</span><img src="hotel5.png" alt="Hotel UI 5"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <div class="company-section" style="border-left-color: #2b2b30;">
+                <div class="company-header">
+                    <div class="company-name">Jap Jap Zero Waste Limited</div>
+                    <div class="role-tags">
+                        <span class="role-badge">Full-time: Feb 2025 - Apr 2025</span>
+                        <span class="role-badge">Part-time: Jan 2022 - Jan 2023</span>
+                        <span class="role-badge" style="border-color: transparent; padding-left:0;">Role: Software Engineer</span>
+                    </div>
+                </div>
+
+                <div class="projects-grid">
+                    <article class="project-card">
+                        <div class="project-title">MQTT Broker Platform & Data Processing System</div>
+                        <div class="project-role">System Design & IoT Data Pipeline</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>System Design:</strong> Led the complete system design for the data processing infrastructure.</li>
+                                <li><strong>MQTT Broker Platform:</strong> Built a scalable MQTT platform for real-time data ingestion.</li>
+                                <li><strong>Data Processing & Storage:</strong> Designed the database architecture to efficiently process, save, and utilize incoming sensor data.</li>
+                            </ul>
+                            <div class="img-container">
+                                <img src="image1.png" alt="MQTT Platform System Design">
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">Machine Learning: Black Soldier Fly Growth Prediction</div>
+                        <div class="project-role">ML Model Development & Data Analysis</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>IoT Data Utilization:</strong> Leveraged real-time data collected from IOT boxes to feed the analysis model.</li>
+                                <li><strong>Growth Prediction Formula:</strong> Developed and calculated a specific formula to predict the weight growing speed of Black Soldier Flies.</li>
+                                <li><strong>Predictive Analytics:</strong> Utilized historical and live data to forecast production outcomes with high accuracy.</li>
+                            </ul>
+                            <div class="comparison-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                                <div class="img-wrapper"><span class="img-label">Analysis Data</span><img src="jap5.png" alt="Data Analysis"></div>
+                                <div class="img-wrapper"><span class="img-label">Growth Calculation</span><img src="jap6.png" alt="Formula Calculation"></div>
+                                <div class="img-wrapper"><span class="img-label">Prediction Model</span><img src="jap7.png" alt="Prediction Result"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-title">Food Waste Monitoring Web-App</div>
+                        <div class="project-role">Full Stack Development & Dashboard Design</div>
+                        <div class="project-content">
+                            <ul>
+                                <li><strong>Client Dashboard:</strong> Developed a dedicated web application for schools and companies to monitor their recycling efforts.</li>
+                                <li><strong>Real-time Monitoring:</strong> Enabled users to view food waste input data and machine status in real-time.</li>
+                                <li><strong>Data Visualization:</strong> Created intuitive dashboards to display consumption metrics and machine operational health.</li>
+                            </ul>
+                            
+                            <div class="comparison-grid" style="grid-template-columns: repeat(4, 1fr);">
+                                <div class="img-wrapper"><span class="img-label">View 1</span><img src="jap1.png" alt="Monitoring App View 1"></div>
+                                <div class="img-wrapper"><span class="img-label">View 2</span><img src="jap2.png" alt="Monitoring App View 2"></div>
+                                <div class="img-wrapper"><span class="img-label">View 3</span><img src="jap3.png" alt="Monitoring App View 3"></div>
+                                <div class="img-wrapper"><span class="img-label">View 4</span><img src="jap4.png" alt="Monitoring App View 4"></div>
+                                <div class="img-wrapper"><span class="img-label">View 5</span><img src="jap5.png" alt="Monitoring App View 5"></div>
+                                <div class="img-wrapper"><span class="img-label">View 6</span><img src="jap6.png" alt="Monitoring App View 6"></div>
+                                <div class="img-wrapper"><span class="img-label">View 7</span><img src="jap7.png" alt="Monitoring App View 7"></div>
+                                <div class="img-wrapper"><span class="img-label">View 8</span><img src="jap8.png" alt="Monitoring App View 8"></div>
+                                <div class="img-wrapper"><span class="img-label">View 9</span><img src="jap9.png" alt="Monitoring App View 9"></div>
+                                <div class="img-wrapper"><span class="img-label">View 10</span><img src="jap10.png" alt="Monitoring App View 10"></div>
+                                <div class="img-wrapper"><span class="img-label">View 11</span><img src="jap11.png" alt="Monitoring App View 11"></div>
+                                <div class="img-wrapper"><span class="img-label">View 12</span><img src="jap12.png" alt="Monitoring App View 12"></div>
+                                <div class="img-wrapper"><span class="img-label">View 13</span><img src="jap13.png" alt="Monitoring App View 13"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <footer style="margin-top: 50px; color: #555; font-size: 12px; text-align: center;">
+                © 2026 Shane Li.
+            </footer>
+
+        </main>
+
+        <div class="right-bar">
+            <div class="menu-btn active"></div>
+            <div class="nav-text">Portfolio</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
